@@ -13,3 +13,5 @@ Daarom staat er nu enkel een .SQL bestand in.
 
 ## Usage
 
+- etc
+- etc

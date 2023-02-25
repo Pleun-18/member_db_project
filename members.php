@@ -32,10 +32,10 @@
         $house_number = $_POST['house_number'];
 
         // $query = "INSERT INTO members (postal, name, house_number) VALUES " . "($postal, $name, $house_number)";
-        $stmt = $pdo->prepare("INSERT INTO members(postal, name, house_number) VALUES(:postal, :name, :house_number)");
-        $stmt->bindValue(`:postal`, $postal, PDO::PARAM_STR);
-        $stmt->bindValue(`:name`, $name, PDO::PARAM_STR);
-        $stmt->bindValue(`:house_number`, $house_number, PDO::PARAM_STR);
+        $stmt = $pdo->prepare("INSERT INTO members(postal, name, house_number) VALUES (:postal, :name, :house_number)");
+        $stmt->bindParam(':postal', $postal, PDO::PARAM_STR);
+        $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+        $stmt->bindParam(':house_number', $house_number, PDO::PARAM_STR);
         $stmt->execute();
 
         //EXECUTE QUERY (POST AND INSERT IN DATABASE)
