@@ -9,13 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script>
-        // When the user clicks on <div>, open the popup
-        function myCookies() {
-            var popup = document.getElementById("cookiePopup");
-            popup.classList.toggle("show");
-        }
-    </script>
 </head>
 
 <body>
@@ -34,26 +27,25 @@
         isset($_POST['house_number'])
     ) {
         //GETS POST VALUES
-        $postal   = $pdo->quote($_POST['postal']);
-        $name   = $pdo->quote($_POST['name']);
-        $house_number = $pdo->quote($_POST['house_number']);
+        $postal   = $_POST['postal'];
+        $name   = $_POST['name'];
+        $house_number = $_POST['house_number'];
 
-        $query = "INSERT INTO members (postal, name, house_number) VALUES " . "($postal, $name, $house_number)";
+        // $query = "INSERT INTO members (postal, name, house_number) VALUES " . "($postal, $name, $house_number)";
+        $stmt = $pdo->prepare("INSERT INTO members(postal, name, house_number) VALUES(:postal, :name, :house_number)");
+        $stmt->bindValue(`:postal`, $postal, PDO::PARAM_STR);
+        $stmt->bindValue(`:name`, $name, PDO::PARAM_STR);
+        $stmt->bindValue(`:house_number`, $house_number, PDO::PARAM_STR);
+        $stmt->execute();
 
         //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
+        // $pdo->query($query);
     }
 
     if (isset($_POST['delete']) && isset($_POST['member_id'])) {
         $member_id  = $pdo->quote($_POST['member_id']);
         $query  = "DELETE FROM members WHERE member_id=$member_id";
         $result = $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
@@ -61,9 +53,6 @@
         $phone_number  = $pdo->quote($_POST['phone_number']);
         $query  = "DELETE FROM phone_numbers WHERE phone_number=$phone_number";
         $result = $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
@@ -71,9 +60,6 @@
         $email_adress  = $pdo->quote($_POST['email_adress']);
         $query  = "DELETE FROM email_adresses WHERE email_adress=$email_adress";
         $result = $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     $query  = "SELECT * FROM postals";
@@ -118,8 +104,9 @@
         <div class="menu menu-2">
             <a href="teams.php">V Overview teams</a>
         </div>
-        <div class="menu menu-3 popup" onclick="myCookies()">^ Show my cookies
-            <span class="popuptext" id="cookiePopup">
+        <div class="menu menu-3">
+            ^ Show my cookies
+            <span class="tooltiptext">
                 <?php 
                     if(isset($_COOKIE["userForename"]) && isset($_COOKIE["userSurname"]) && isset($_COOKIE["currentDate"])) {
                         echo "<b>Cookie:</b><br> User is " . $_COOKIE["userForename"] . " " .  $_COOKIE["userSurname"] . 
@@ -135,7 +122,7 @@
 
     <div class="add-block">
         <h2 style="font-weight: 900;">Add member: </h2>
-        <form action="leden.php" method="post">
+        <form action="members.php" method="post">
             <label for="postal">Postals</label>
             <select type="text" name="postal">
                 <?php
@@ -183,7 +170,7 @@
                     <ul style="float: left;">
                         <li><?php  echo $row["phone_number"]; ?></li>
                     </ul>
-                    <form action='leden.php' method='post'>
+                    <form action='members.php' method='post'>
                         <input type='hidden' name='delete' value='yes'>
                         <input type='hidden' name='phone_number' value='<?= $row['phone_number'] ?>'>
                         <div class="delete-member">
@@ -206,7 +193,7 @@
                     <ul style="float: left;">
                         <li><?php  echo $row["email_adress"]; ?></li>
                     </ul>
-                    <form action='leden.php' method='post'>
+                    <form action='members.php' method='post'>
                         <input type='hidden' name='delete' value='yes'>
                         <input type='hidden' name='email_adress' value='<?= $row['email_adress'] ?>'>
                         <div class="delete-member">
@@ -219,7 +206,7 @@
             }
             ?>
 
-            <form action='leden.php' method='post' clsas="change-delete-member">
+            <form action='members.php' method='post' clsas="change-delete-member">
                 <input type='hidden' name='delete' value='yes'>
                 <input type='hidden' name='member_id' value='<?= $member['member_id'] ?>'>
                 <div class="input-buttons">
@@ -364,60 +351,7 @@
             display: flex;
             flex-direction: column;
         }
-        /* Popup container */
-        .popup {
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* The actual popup (appears on top) */
-        .popup .popuptext {
-            visibility: hidden;
-            width: 150%;
-            background-color: #555;
-            font-size: 10px;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            margin-left: -80px;
-            font-weight: 100;
-        }
-
-        /* Popup arrow */
-        .popup .popuptext::after {
-            content: "";
-            position: absolute;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        /* Toggle this class when clicking on the popup container (hide and show the popup) */
-        .popup .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s
-        }
-
-        /* Add animation (fade in the popup) */
-        @-webkit-keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity:1 ;}
-        }
+        
 
         .main-menu {
             display: flex; 
@@ -441,8 +375,30 @@
             background-color: var(--yellow);
         }
         .menu-3 {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
             background-color: var(--blue);
         }
+
+        .menu-3 .tooltiptext {
+            visibility: hidden;
+            margin-top: 30px;
+            width: 220px;
+            background-color: lightgray;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            left: 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .menu-3:hover .tooltiptext {
+            visibility: visible;
+        }
+        
     </style>
 
 </body>

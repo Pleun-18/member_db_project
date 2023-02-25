@@ -9,13 +9,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script>
-        // When the user clicks on <div>, open the popup
-        function myCookies() {
-            var popup = document.getElementById("cookiePopup");
-            popup.classList.toggle("show");
-        }
-    </script>
 </head>
 
 <body>
@@ -44,7 +37,7 @@
         }
     ?>
 
-    <a href="leden.php">I wish to proceed to my overview ></a>
+    <a href="members.php">I wish to proceed to my overview ></a>
 
 
 </body>

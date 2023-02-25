@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2023 at 10:23 AM
--- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- Gegenereerd op: 20 dec 2022 om 22:03
+-- Serverversie: 10.4.27-MariaDB
+-- PHP-versie: 8.1.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `email_adresses`
+-- Tabelstructuur voor tabel `email_adresses`
 --
 
 CREATE TABLE `email_adresses` (
@@ -33,7 +33,7 @@ CREATE TABLE `email_adresses` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `email_adresses`
+-- Gegevens worden geëxporteerd voor tabel `email_adresses`
 --
 
 INSERT INTO `email_adresses` (`email_adress`, `member_id`) VALUES
@@ -57,7 +57,7 @@ INSERT INTO `email_adresses` (`email_adress`, `member_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `members`
+-- Tabelstructuur voor tabel `members`
 --
 
 CREATE TABLE `members` (
@@ -68,7 +68,7 @@ CREATE TABLE `members` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `members`
+-- Gegevens worden geëxporteerd voor tabel `members`
 --
 
 INSERT INTO `members` (`member_id`, `name`, `postal`, `house_number`) VALUES
@@ -91,7 +91,7 @@ INSERT INTO `members` (`member_id`, `name`, `postal`, `house_number`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `phone_numbers`
+-- Tabelstructuur voor tabel `phone_numbers`
 --
 
 CREATE TABLE `phone_numbers` (
@@ -100,7 +100,7 @@ CREATE TABLE `phone_numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `phone_numbers`
+-- Gegevens worden geëxporteerd voor tabel `phone_numbers`
 --
 
 INSERT INTO `phone_numbers` (`phone_number`, `member_id`) VALUES
@@ -125,34 +125,35 @@ INSERT INTO `phone_numbers` (`phone_number`, `member_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `postals`
+-- Tabelstructuur voor tabel `postals`
 --
 
 CREATE TABLE `postals` (
+  `id` int(11) NOT NULL,
   `postal` varchar(6) NOT NULL,
   `adress` varchar(128) DEFAULT NULL,
   `residence` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `postals`
+-- Gegevens worden geëxporteerd voor tabel `postals`
 --
 
-INSERT INTO `postals` (`postal`, `adress`, `residence`) VALUES
-('2930JK', 'Buttondorp 28', 'Doetinchem'),
-('3939SL', 'Zuiderweg', 'Nijmegen'),
-('4029ED', 'Knoopstraat 92', 'Deventer'),
-('5674KJ', 'Groenloer 39', 'Groenlo'),
-('5859GR', 'Janpietstraat 29', 'Arnhem'),
-('7681CH', 'Westerweg 19', 'Beerzeveld'),
-('9283SK', 'Ruitjesweg 38', 'Groningen'),
-('9393SD', 'Schevense 92', 'Leeuwardingen'),
-('9393SJ', 'Schevense 29', 'Leeuwarden');
+INSERT INTO `postals` (`id`, `postal`, `adress`, `residence`) VALUES
+(0, '2930JK', 'Buttondorp 28', 'Doetinchem'),
+(1, '4029ED', 'Knoopstraat 92', 'Deventer'),
+(2, '5859GR', 'Janpietstraat 29', 'Arnhem'),
+(3, '9283SK', 'Ruitjesweg 38', 'Groningen'),
+(4, '9393SJ', 'Schevense 29', 'Leeuwarden'),
+(5, '9393SD', 'Schevense 92', 'Leeuwardingen'),
+(11, '3939SL', 'Zuiderweg', 'Nijmegen'),
+(13, '7681CH', 'Westerweg 19', 'Beerzeveld'),
+(14, '5674KJ', 'Groenloer 39', 'Groenlo');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `teams`
+-- Tabelstructuur voor tabel `teams`
 --
 
 CREATE TABLE `teams` (
@@ -161,7 +162,7 @@ CREATE TABLE `teams` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `teams`
+-- Gegevens worden geëxporteerd voor tabel `teams`
 --
 
 INSERT INTO `teams` (`team_name`, `description`) VALUES
@@ -174,7 +175,7 @@ INSERT INTO `teams` (`team_name`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `team_member`
+-- Tabelstructuur voor tabel `team_member`
 --
 
 CREATE TABLE `team_member` (
@@ -184,7 +185,7 @@ CREATE TABLE `team_member` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `team_member`
+-- Gegevens worden geëxporteerd voor tabel `team_member`
 --
 
 INSERT INTO `team_member` (`team_member_id`, `team_name`, `member_id`) VALUES
@@ -198,7 +199,7 @@ INSERT INTO `team_member` (`team_member_id`, `team_name`, `member_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Tabelstructuur voor tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -209,7 +210,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `users`
+-- Gegevens worden geëxporteerd voor tabel `users`
 --
 
 INSERT INTO `users` (`forename`, `surname`, `username`, `password`) VALUES
@@ -217,44 +218,45 @@ INSERT INTO `users` (`forename`, `surname`, `username`, `password`) VALUES
 ('Pleun', 'Alferink', 'pleun', '$2y$10$g5v.OtxyOgv6667RqmJzi.E91rl.FcjN8l2JuC/vFPufiSrWfLD/O');
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `email_adresses`
+-- Indexen voor tabel `email_adresses`
 --
 ALTER TABLE `email_adresses`
   ADD PRIMARY KEY (`email_adress`),
   ADD KEY `member_id` (`member_id`);
 
 --
--- Indexes for table `members`
+-- Indexen voor tabel `members`
 --
 ALTER TABLE `members`
   ADD PRIMARY KEY (`member_id`),
   ADD KEY `postal` (`postal`);
 
 --
--- Indexes for table `phone_numbers`
+-- Indexen voor tabel `phone_numbers`
 --
 ALTER TABLE `phone_numbers`
   ADD PRIMARY KEY (`phone_number`),
   ADD KEY `member_id` (`member_id`);
 
 --
--- Indexes for table `postals`
+-- Indexen voor tabel `postals`
 --
 ALTER TABLE `postals`
-  ADD PRIMARY KEY `postal` (`postal`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `postal` (`postal`);
 
 --
--- Indexes for table `teams`
+-- Indexen voor tabel `teams`
 --
 ALTER TABLE `teams`
   ADD PRIMARY KEY (`team_name`);
 
 --
--- Indexes for table `team_member`
+-- Indexen voor tabel `team_member`
 --
 ALTER TABLE `team_member`
   ADD PRIMARY KEY (`team_member_id`),
@@ -262,48 +264,42 @@ ALTER TABLE `team_member`
   ADD KEY `member_id` (`member_id`);
 
 --
--- Indexes for table `users`
+-- Indexen voor tabel `users`
 --
 ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `members`
+-- AUTO_INCREMENT voor een tabel `members`
 --
 ALTER TABLE `members`
   MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
--- AUTO_INCREMENT for table `team_member`
+-- AUTO_INCREMENT voor een tabel `postals`
+--
+ALTER TABLE `postals`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT voor een tabel `team_member`
 --
 ALTER TABLE `team_member`
   MODIFY `team_member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `email_adresses`
+-- Beperkingen voor tabel `email_adresses`
 --
 ALTER TABLE `email_adresses`
-  ADD CONSTRAINT `email_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE;
-COMMIT;
---
--- Constraints for table `members`
---
-ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`postal`) REFERENCES `postal` (`postal`);
-
---
--- Constraints for table `phone_numbers`
---
-ALTER TABLE `phone_numbers`
-  ADD CONSTRAINT `phone_numbers_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `email_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

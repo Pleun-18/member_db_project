@@ -8,19 +8,13 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="">
-    <script>
-        // When the user clicks on <div>, open the popup
-        function myCookies() {
-            var popup = document.getElementById("cookiePopup");
-            popup.classList.toggle("show");
-        }
-    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
 
     <?php
-    require_once 'login.php';
+    require_once 'db_creds.php';
 
     try {
         $pdo = new PDO($attr, $user, $pass, $opts);
@@ -44,9 +38,6 @@
 
         //EXECUTE QUERY (POST AND INSERT IN DATABASE)
         $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     //CHECKS FOR POST VALUES
@@ -62,8 +53,6 @@
         //EXECUTE QUERY (POST AND INSERT IN DATABASE)
         $pdo->query($query);
 
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     //CHECKS FOR POST VALUES
@@ -78,18 +67,12 @@
 
         //EXECUTE QUERY (POST AND INSERT IN DATABASE)
         $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     if (isset($_POST['delete']) && isset($_POST['member_id'])) {
         $member_id  = $pdo->quote($_POST['member_id']);
         $query  = "DELETE FROM members WHERE member_id=$member_id";
         $result = $pdo->query($query);
-
-        //EMPTIES POST VALUES
-        header("Refresh:0");
     }
 
     $query  = "SELECT * FROM postals";
@@ -137,10 +120,10 @@
             <a href="logout.php">< logout</a>
         </div>
         <div class="menu menu-2">
-            <a href="leden.php">V Overview leden</a>
+            <a href="members.php">V Overview Members</a>
         </div>
-        <div class="menu menu-3 popup" onclick="myCookies()">^ Show my cookies
-            <span class="popuptext" id="cookiePopup">
+        <div class="menu menu-3" onclick="myCookies()">^ Show my cookies
+            <span class="tooltiptext">
                 <?php 
                     if(isset($_COOKIE["userForename"]) && isset($_COOKIE["userSurname"]) && isset($_COOKIE["currentDate"])) {
                         echo "<b>Cookie:</b><br> User is " . $_COOKIE["userForename"] . " " .  $_COOKIE["userSurname"] . 
@@ -271,61 +254,6 @@
             cursor: pointer;
         }
 
-        /* Popup container */
-        .popup {
-            position: relative;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* The actual popup (appears on top) */
-        .popup .popuptext {
-            visibility: hidden;
-            width: 150%;
-            background-color: #555;
-            font-size: 10px;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: absolute;
-            z-index: 1;
-            bottom: 125%;
-            margin-left: -80px;
-            font-weight: 100;
-        }
-
-        /* Popup arrow */
-        .popup .popuptext::after {
-            content: "";
-            position: absolute;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: #555 transparent transparent transparent;
-        }
-
-        /* Toggle this class when clicking on the popup container (hide and show the popup) */
-        .popup .show {
-            visibility: visible;
-            -webkit-animation: fadeIn 1s;
-            animation: fadeIn 1s
-        }
-
-        /* Add animation (fade in the popup) */
-        @-webkit-keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity: 1;}
-        }
-
-        @keyframes fadeIn {
-            from {opacity: 0;}
-            to {opacity:1 ;}
-        }
-
         .main-menu {
             display: flex; 
             flex-direction: row; 
@@ -349,7 +277,28 @@
             background-color: var(--yellow);
         }
         .menu-3 {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
             background-color: var(--blue);
+        }
+
+        .menu-3 .tooltiptext {
+            visibility: hidden;
+            margin-top: 30px;
+            width: 220px;
+            background-color: lightgray;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            left: 0;
+            /* Position the tooltip */
+            position: absolute;
+            z-index: 1;
+        }
+
+        .menu-3:hover .tooltiptext {
+            visibility: visible;
         }
     </style>
 

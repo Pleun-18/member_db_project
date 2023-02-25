@@ -84,13 +84,13 @@
             echo "<div class='welcome-logged-in'>";
             echo htmlspecialchars("$fn $sn : Hi $fn,
               you are now logged in as '$un'");
-            echo ("<p><a href='leden.php'>Go to member overview ></a><br><br>
+            echo ("<p><a href='members.php'>Go to member overview ></a><br><br>
             <a href='logout.php'>Click here to logout</a></p>");
             echo "</div>";
           }
           else {
             echo ("<p class='invalid-output'>Invalid username/password combination</p>");
-            header("Refresh:0");
+            // header("Refresh:0");
           }
         }
       }
