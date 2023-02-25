@@ -1,0 +1,142 @@
+===Database member_db
+
+== Tabelstructuur voor tabel email_adresses
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**email_adress**//|varchar(128)|Nee|
+|member_id|int(11)|Nee|
+== Gegevens worden geëxporteerd voor tabel email_adresses
+
+|jan@jansen.nl|0
+|Jan@kroon.nl|0
+|jookertje@hotmail.com|1
+|Karel@gmail.com|3
+|Kees@gmail.com|4
+|koen2@gmail.com|5
+|koen@gmail.com|5
+|piet29@gmail.com|6
+|pienp@gmail.com|7
+|pieterv@gmail.com|8
+|nijn@gmail.com|9
+|freek@gmail.com|10
+|Peterpan@gmail.com|11
+|kraantje@gids.nl|12
+|warnerb@gmail.com|13
+|bram@gmail.com|16
+== Tabelstructuur voor tabel members
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**member_id**//|int(11)|Nee|
+|name|varchar(128)|Ja|NULL
+|postal|varchar(6)|Nee|
+|house_number|varchar(128)|Ja|NULL
+== Gegevens worden geëxporteerd voor tabel members
+
+|0|Jan Pietertjes   |2930JK|24
+|1|Joke Peter|5859GR|30
+|2|Pieter Jansen |4022KD|65
+|3|Karel de Lange|2940WK|32
+|4|Kees de Kolk|5869LR|33
+|5|Koen Sanders  |4029ED|42
+|6|Piet Frederikjes |2230JK|8
+|7|Pien Pan|5759GJ|36
+|8|Pieter van Vliet|4059CD|37
+|9|Nijn Tjerp|3930JK|38
+|10|Freek Vonk|9191SD|39
+|11|Peter Pannekoek|9292SH|40
+|12|Kraantje Pappie|7681CH|38
+|13|Warners Bros|5674KJ|39
+|16|Bram van der Vugt|9283SK|45
+== Tabelstructuur voor tabel phone_numbers
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**phone_number**//|varchar(12)|Nee|
+|member_id|int(11)|Nee|
+== Gegevens worden geëxporteerd voor tabel phone_numbers
+
+|0693843928|0
+|0692938201|1
+|0610293847|2
+|0637283928|2
+|0693847562|3
+|0602938201|4
+|0602928201|5
+|0610857829|6
+|0610834234|7
+|0612346436|8
+|0613467358|9
+|0615346738|10
+|0635346738|11
+|0635346739|12
+|0685830827|12
+|0282383888|13
+|06543729747|16
+== Tabelstructuur voor tabel postals
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**id**//|int(11)|Nee|
+|**postal**|varchar(6)|Nee|
+|adress|varchar(128)|Ja|NULL
+|residence|varchar(128)|Ja|NULL
+== Gegevens worden geëxporteerd voor tabel postals
+
+|0|2930JK|Buttondorp 28|Doetinchem
+|1|4029ED|Knoopstraat 92|Deventer
+|2|5859GR|Janpietstraat 29|Arnhem
+|3|9283SK|Ruitjesweg 38|Groningen
+|4|9393SJ|Schevense 29|Leeuwarden
+|5|9393SD|Schevense 92|Leeuwardingen
+|11|3939SL|Zuiderweg|Nijmegen
+|13|7681CH|Westerweg 19|Beerzeveld
+|14|5674KJ|Groenloer 39|Groenlo
+== Tabelstructuur voor tabel teams
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**team_name**//|varchar(128)|Nee|
+|description|varchar(255)|Nee|
+== Gegevens worden geëxporteerd voor tabel teams
+
+|Kogelingen|Kogelstoten
+|Laagspringers|Hordelopers
+|Looie lopers|Hardlopers
+|Ouwe knakkers|Poolstok
+|Snellingers|Sprinters
+== Tabelstructuur voor tabel team_member
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|//**team_member_id**//|int(11)|Nee|
+|team_name|varchar(32)|Nee|
+|member_id|varchar(32)|Nee|
+== Gegevens worden geëxporteerd voor tabel team_member
+
+|2|Ouwe knakkers|9
+|21|Kogelingen|3
+|22|Looie lopers|5
+|23|Snellingers|4
+|24|Kogelingen|11
+|27|Laagspringers|6
+== Tabelstructuur voor tabel users
+
+|------
+|Kolom|Type|Leeg|Standaardwaarde
+|------
+|forename|varchar(32)|Nee|
+|surname|varchar(32)|Nee|
+|//**username**//|varchar(32)|Nee|
+|password|varchar(255)|Nee|
+== Gegevens worden geëxporteerd voor tabel users
+
+|LOIDocent|LOI|LOIDocent|$2y$10$ikN6/gAaI9Sxp1avmmCLAum/BHjeaGDxhdszhVTHv.aQLb5vDeydm
+|Pleun|Alferink|pleun|$2y$10$g5v.OtxyOgv6667RqmJzi.E91rl.FcjN8l2JuC/vFPufiSrWfLD/O
