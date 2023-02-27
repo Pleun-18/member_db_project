@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 25, 2023 at 10:23 AM
+-- Generation Time: Feb 27, 2023 at 05:30 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -38,7 +38,6 @@ CREATE TABLE `email_adresses` (
 
 INSERT INTO `email_adresses` (`email_adress`, `member_id`) VALUES
 ('jan@jansen.nl', 0),
-('Jan@kroon.nl', 0),
 ('jookertje@hotmail.com', 1),
 ('Karel@gmail.com', 3),
 ('Kees@gmail.com', 4),
@@ -86,7 +85,8 @@ INSERT INTO `members` (`member_id`, `name`, `postal`, `house_number`) VALUES
 (11, 'Peter Pannekoek', '9292SH', '40'),
 (12, 'Kraantje Pappie', '7681CH', '38'),
 (13, 'Warners Bros', '5674KJ', '39'),
-(16, 'Bram van der Vugt', '9283SK', '45');
+(16, 'Bram van der Vugt', '9283SK', '45'),
+(29, 'Joop de Groen', '7681CH', '92');
 
 -- --------------------------------------------------------
 
@@ -245,7 +245,7 @@ ALTER TABLE `phone_numbers`
 -- Indexes for table `postals`
 --
 ALTER TABLE `postals`
-  ADD PRIMARY KEY `postal` (`postal`);
+  ADD PRIMARY KEY (`postal`);
 
 --
 -- Indexes for table `teams`
@@ -275,7 +275,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `members`
 --
 ALTER TABLE `members`
-  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `member_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `team_member`
@@ -291,13 +291,7 @@ ALTER TABLE `team_member`
 -- Constraints for table `email_adresses`
 --
 ALTER TABLE `email_adresses`
-  ADD CONSTRAINT `email_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`) ON DELETE CASCADE;
-COMMIT;
---
--- Constraints for table `members`
---
-ALTER TABLE `members`
-  ADD CONSTRAINT `members_ibfk_1` FOREIGN KEY (`postal`) REFERENCES `postal` (`postal`);
+  ADD CONSTRAINT `email_ibfk_1` FOREIGN KEY (`member_id`) REFERENCES `members` (`member_id`);
 
 --
 -- Constraints for table `phone_numbers`
