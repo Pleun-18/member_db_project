@@ -30,11 +30,15 @@
         $postal   = get_post($pdo, 'postal');
         $adress   = get_post($pdo, 'adress');
         $residence = get_post($pdo, 'residence');
-        // $joinQuery  = "SELECT member_id, postal FROM members JOIN postals ON members.postal=postals.postal";
 
-        $query    = "INSERT INTO postals (postal, adress, residence) VALUES " . "($postal, $adress, $residence)";
-        $result = $pdo->query($query);
+        //PREPARED STATEMENT
+        $stmt = $pdo->prepare("INSERT INTO postals(postal, adress, residence) VALUES (:postal, :adress, :residence)");
+        $stmt->bindParam(':postal', $postal, PDO::PARAM_STR);
+        $stmt->bindParam(':adress', $adress, PDO::PARAM_STR);
+        $stmt->bindParam(':residence', $residence, PDO::PARAM_STR);
+        $stmt->execute();
     }
+    
     ?>
 
     <?php // START SESSION

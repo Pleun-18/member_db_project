@@ -7,6 +7,7 @@
     <title>MEMBER OVERVIEW</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
@@ -30,35 +31,37 @@
         $name   = $_POST['name'];
         $house_number = $_POST['house_number'];
 
-        // $query = "INSERT INTO members (postal, name, house_number) VALUES " . "($postal, $name, $house_number)";
+        //PREPARED STATEMENT
         $stmt = $pdo->prepare("INSERT INTO members(postal, name, house_number) VALUES (:postal, :name, :house_number)");
         $stmt->bindParam(':postal', $postal, PDO::PARAM_STR);
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':house_number', $house_number, PDO::PARAM_STR);
         $stmt->execute();
-
-        //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        // $pdo->query($query);
     }
 
     if (isset($_POST['delete']) && isset($_POST['member_id'])) {
         $member_id  = $pdo->quote($_POST['member_id']);
         $query  = "DELETE FROM members WHERE member_id=$member_id";
-        $result = $pdo->query($query);
+
+        // $stmt = $pdo->prepare("DELETE FROM members WHERE (:member_id=$member_id)");
+        // $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
+        // $stmt->execute();
+
+        $pdo->query($query);
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
     if (isset($_POST['delete']) && isset($_POST['phone_number'])) {
         $phone_number  = $pdo->quote($_POST['phone_number']);
         $query  = "DELETE FROM phone_numbers WHERE phone_number=$phone_number";
-        $result = $pdo->query($query);
+        $pdo->query($query);
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
     if (isset($_POST['delete']) && isset($_POST['email_adress'])) {
         $email_adress  = $pdo->quote($_POST['email_adress']);
         $query  = "DELETE FROM email_adresses WHERE email_adress=$email_adress";
-        $result = $pdo->query($query);
+        $pdo->query($query);
     }
 
     $query  = "SELECT * FROM postals";
@@ -92,6 +95,7 @@
             exit();
         }
     ?>
+    
     <nav class="main-menu">
         <div class="menu menu-1">
             <a href="logout.php">< logout</a>

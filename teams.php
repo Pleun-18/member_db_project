@@ -44,10 +44,11 @@
         $team_name   = $pdo->quote($_POST['team_name']);
         $description   = $pdo->quote($_POST['description']);
 
-        $query = "INSERT INTO teams (team_name, description) VALUES " . "($team_name, $description)";
-
-        //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        $pdo->query($query);
+        //PREPARED STATEMENT
+        $stmt = $pdo->prepare("INSERT INTO teams(team_name, description) VALUES (:team_name, :description)");
+        $stmt->bindParam(':team_name', $team_name, PDO::PARAM_STR);
+        $stmt->bindParam(':description', $description, PDO::PARAM_STR);
+        $stmt->execute();
     }
 
     //CHECKS FOR TEAM MEMBERS AND ADDING TO TEAM
@@ -56,23 +57,24 @@
         $team_name  = $pdo->quote($_POST['team_name']);
         $member_id   = $pdo->quote($_POST['member_id']);
 
-        $query = "INSERT INTO team_member (team_name, member_id) VALUES " . "($team_name, $member_id)";
-
-        //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        $pdo->query($query);
+        //PREPARED STATEMENT
+        $stmt = $pdo->prepare("INSERT INTO team_member(team_name, member_id) VALUES (:team_name, :member_id)");
+        $stmt->bindParam(':team_name', $team_name, PDO::PARAM_STR);
+        $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
+        $stmt->execute();
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
     if (isset($_POST['delete']) && isset($_POST['team_name'])) {
         $member_id  = $pdo->quote($_POST['team_name']);
         $query  = "DELETE FROM teams WHERE team_name=$team_name";
-        $result = $pdo->query($query);
+        $pdo->query($query);
     }
 
     if (isset($_POST['delete']) && isset($_POST['team_member_id'])) {
         $team_member_id  = $pdo->quote($_POST['team_member_id']);
         $query  = "DELETE FROM team_member WHERE team_member_id=$team_member_id";
-        $result = $pdo->query($query);
+        $pdo->query($query);
     }
 
     $query  = "SELECT member_id,name FROM members";

@@ -62,16 +62,18 @@
         //GETS POST VALUES
         $phone_number   = $pdo->quote($_POST['phone_number']);
         $member_id   = $pdo->quote($_POST['member_id']);
-        $query = "INSERT INTO phone_numbers (phone_number, member_id) VALUES " . "($phone_number, $member_id)";
 
-        //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        $pdo->query($query);
+        //PREPARED STATEMENT
+        $stmt = $pdo->prepare("INSERT INTO phone_numbers(phone_number, member_id) VALUES (:phone_number, :member_id)");
+        $stmt->bindParam(':phone_number', $phone_number, PDO::PARAM_STR);
+        $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
+        $stmt->execute();
     }
 
     if (isset($_POST['delete']) && isset($_POST['member_id'])) {
         $member_id  = $pdo->quote($_POST['member_id']);
         $query  = "DELETE FROM members WHERE member_id=$member_id";
-        $result = $pdo->query($query);
+        $pdo->query($query);
     }
 
     $query  = "SELECT * FROM postals";
@@ -80,8 +82,7 @@
     $query  = "SELECT * FROM members";
     $allMembers = $pdo->query($query);
 
-    //--> TRIED TO ADD THE MEMBER_ID TO INSERT MEMBER INFO AS VALUE
-
+    //ADD THE MEMBER_ID TO INSERT MEMBER INFO AS VALUE
     if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
         $url = "https://";
     } else {
