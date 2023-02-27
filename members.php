@@ -7,7 +7,6 @@
     <title>MEMBER OVERVIEW</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
@@ -83,10 +82,6 @@
         {
             $forename = htmlspecialchars($_COOKIE['userForename']);
             $surname  = htmlspecialchars($_COOKIE['userSurname']);
-            
-            setcookie("userForename", $forename, time() + 60 * 60 * 24 * 7);
-            setcookie("userSurname", $surname, time() + 60 * 60 * 24 * 7);
-            setcookie("currentDate", date("l jS \of F Y h:i:s A"), time() + 60 * 60 * 24 * 7);
 
             echo "<div class='welcome-message'><p>Welcome back $forename.<br>
                   Your full name is $forename $surname.</p><br></div>";

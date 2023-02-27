@@ -7,13 +7,14 @@
     <title>MEMBER POSTAL CREATION</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
 </head>
 
 <body>
 
     <?php
     require_once 'db_creds.php';
+
+    session_start();
 
     try {
         $pdo = new PDO($attr, $user, $pass, $opts);

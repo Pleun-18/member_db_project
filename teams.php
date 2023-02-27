@@ -7,14 +7,30 @@
     <title>MEMBER REGISTRATION</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
 
     <?php
-    require_once 'login.php';
+    require_once 'db_creds.php';
+
+    // set_error_handler( "log_error" );
+    // set_exception_handler( "log_exception" );
+    // function log_error( $num, $str, $file, $line, $context = null )
+    // {
+
+    //     log_exception( new ErrorException( $str, 0, $num, $file, $line ) );
+    // }
+
+    // function log_exception( Exception $e )
+    // {
+    //     http_response_code(500);
+    //     log_error($e);
+    //     echo "Some Error Occured. Please Try Later.";
+    //     exit();
+    // }
+    // error_reporting(E_ALL);
 
     try {
         $pdo = new PDO($attr, $user, $pass, $opts);
@@ -77,10 +93,6 @@
         {
             $forename = htmlspecialchars($_COOKIE['userForename']);
             $surname  = htmlspecialchars($_COOKIE['userSurname']);
-
-            setcookie("userForename", $forename, time() + 60 * 60 * 24 * 7);
-            setcookie("userSurname", $surname, time() + 60 * 60 * 24 * 7);
-            setcookie("currentDate", date("l jS \of F Y h:i:s A"), time() + 60 * 60 * 24 * 7);
 
             echo "<div class='welcome-message'><p>Welcome back $forename.<br>
                   Your full name is $forename $surname.</p><br></div>";
