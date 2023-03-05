@@ -37,8 +37,14 @@
         $stmt->bindParam(':adress', $adress, PDO::PARAM_STR);
         $stmt->bindParam(':residence', $residence, PDO::PARAM_STR);
         $stmt->execute();
+
+        if ($stmt) {
+            echo "<script type='text/javascript'>alert('Upload succesfull');</script>";
+        }else {
+            echo "<script type='text/javascript'>alert('Something went wrong');</script>";
+        }
     }
-    
+
     ?>
 
     <?php // START SESSION
@@ -130,10 +136,6 @@
             --title: "Roboto";
         }
 
-        body {
-            font-family: 'Roboto';
-        }
-
         .welcome-message {
             width: 100%;
             text-align: center;
@@ -187,17 +189,6 @@
             flex-direction: column;
             padding: 20px;
         }
-
-        .welcome-message {
-            width: 100%;
-            text-align: center;
-            background-color: var(--blue);
-            color: white;
-            font-size: 24px;
-            padding-top: 20px;
-            box-shadow: 2px 2px 15px grey;
-        }
-
         .main-menu {
             display: flex; 
             flex-direction: row; 

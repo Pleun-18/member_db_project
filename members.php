@@ -37,31 +37,50 @@
         $stmt->bindParam(':name', $name, PDO::PARAM_STR);
         $stmt->bindParam(':house_number', $house_number, PDO::PARAM_STR);
         $stmt->execute();
+
+        if ($stmt) {
+            echo "<script type='text/javascript'>alert('Upload succesfull');</script>";
+        }else {
+            echo "<script type='text/javascript'>alert('Something went wrong');</script>";
+        }
     }
 
     if (isset($_POST['delete']) && isset($_POST['member_id'])) {
         $member_id  = $pdo->quote($_POST['member_id']);
         $query  = "DELETE FROM members WHERE member_id=$member_id";
-
-        // $stmt = $pdo->prepare("DELETE FROM members WHERE (:member_id=$member_id)");
-        // $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
-        // $stmt->execute();
-
-        $pdo->query($query);
+        $result = $pdo->query($query);
+        //GUARD CLAUSE
+        if (!$result && !$query) {
+            die ('Error after deleting phone number');
+        } else {
+            echo "<script type='text/javascript'>alert('Deleted successfully');</script>";
+        }
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
     if (isset($_POST['delete']) && isset($_POST['phone_number'])) {
         $phone_number  = $pdo->quote($_POST['phone_number']);
         $query  = "DELETE FROM phone_numbers WHERE phone_number=$phone_number";
-        $pdo->query($query);
+        $result = $pdo->query($query);
+        //GUARD CLAUSE
+        if (!$result) {
+            die ('Error after deleting phone number');
+        } else {
+            echo "<script type='text/javascript'>alert('Deleted successfully');</script>";
+        }
     }
 
     //CHECKS FOR POST VALUES AND DELETES THE SELECTED
     if (isset($_POST['delete']) && isset($_POST['email_adress'])) {
         $email_adress  = $pdo->quote($_POST['email_adress']);
         $query  = "DELETE FROM email_adresses WHERE email_adress=$email_adress";
-        $pdo->query($query);
+        $result = $pdo->query($query);
+        //QUARD CLAUSE
+        if (!$result) {
+            die ('Error after deleting email adress');
+        } else {
+            echo "<script type='text/javascript'>alert('Deleted successfully');</script>";
+        }
     }
 
     $query  = "SELECT * FROM postals";
@@ -174,7 +193,7 @@
                         <input type='hidden' name='phone_number' value='<?= $row['phone_number'] ?>'>
                         <div class="delete-member">
                             <i class="glyphicon glyphicon-trash" style="float: left;"></i>
-                            <input type='submit' value='Erase' style="margin: -5px 0px 0px 0px; border: none; background: transparent; float: left;">
+                            <input type='submit' value='Erase' style="border: none; background: transparent; float: left;">
                         </div>
                     </form>
                 </div>
@@ -197,7 +216,7 @@
                         <input type='hidden' name='email_adress' value='<?= $row['email_adress'] ?>'>
                         <div class="delete-member">
                             <i class="glyphicon glyphicon-trash" style="float: left;"></i>
-                            <input type='submit' value='Erase' style="margin: -5px 0px 0px 0px; border: none; background: transparent; float: left;">
+                            <input type='submit' value='Erase' style="border: none; background: transparent; float: left;">
                         </div>
                     </form>
                 </div>
@@ -212,6 +231,12 @@
                     <div class="input-container">
                         <i class="glyphicon glyphicon-trash" style="float: left;"></i>
                         <input type='submit' value='Delete' style="margin: -5px 0px 0px 0px; border: none; background: transparent; float: left;">
+                        <div class="menu-3" style="color: white; padding: 0 2px;">
+                            ?
+                            <span class="tooltiptext" style="color: black; box-shadow: 2px 2px 2px gray; background: white;">
+                                    <p>If you wish to delete yourself as member. First delete your user information. *(emails/phone numbers)</p>
+                            </span>
+                        </div>
                     </div>
                     <div class="input-container">
                         <a type="button" href="update_member.php?member_id=<?= $member['member_id'] ?> &postal=<?= $member['postal'] ?> &name=<?= $member['name'] ?> &house_number=<?= $member['house_number'] ?>">
@@ -332,7 +357,6 @@
         .input-buttons {
             display: flex;
             align-items: center;
-            width: 100%;
             padding: 0 10px !important;
             margin: 0;
             background-color: gray;

@@ -15,23 +15,6 @@
     <?php
     require_once 'db_creds.php';
 
-    // set_error_handler( "log_error" );
-    // set_exception_handler( "log_exception" );
-    // function log_error( $num, $str, $file, $line, $context = null )
-    // {
-
-    //     log_exception( new ErrorException( $str, 0, $num, $file, $line ) );
-    // }
-
-    // function log_exception( Exception $e )
-    // {
-    //     http_response_code(500);
-    //     log_error($e);
-    //     echo "Some Error Occured. Please Try Later.";
-    //     exit();
-    // }
-    // error_reporting(E_ALL);
-
     try {
         $pdo = new PDO($attr, $user, $pass, $opts);
     } catch (PDOException $e) {
@@ -54,27 +37,32 @@
     //CHECKS FOR TEAM MEMBERS AND ADDING TO TEAM
     if ( isset($_POST['team_name']) && isset($_POST['member_id']) ) {
         //GETS POST VALUES
-        $team_name  = $pdo->quote($_POST['team_name']);
-        $member_id   = $pdo->quote($_POST['member_id']);
+        $team_name  = $_POST['team_name'];
+        $member_id   = $_POST['member_id'];
 
         //PREPARED STATEMENT
         $stmt = $pdo->prepare("INSERT INTO team_member(team_name, member_id) VALUES (:team_name, :member_id)");
         $stmt->bindParam(':team_name', $team_name, PDO::PARAM_STR);
         $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
         $stmt->execute();
-    }
 
-    //CHECKS FOR POST VALUES AND DELETES THE SELECTED
-    if (isset($_POST['delete']) && isset($_POST['team_name'])) {
-        $member_id  = $pdo->quote($_POST['team_name']);
-        $query  = "DELETE FROM teams WHERE team_name=$team_name";
-        $pdo->query($query);
+        if ($stmt) {
+            echo "<script type='text/javascript'>alert('Upload succesfull');</script>";
+        }else {
+            echo "<script type='text/javascript'>alert('Something went wrong');</script>";
+        }
     }
 
     if (isset($_POST['delete']) && isset($_POST['team_member_id'])) {
         $team_member_id  = $pdo->quote($_POST['team_member_id']);
         $query  = "DELETE FROM team_member WHERE team_member_id=$team_member_id";
-        $pdo->query($query);
+        $result = $pdo->query($query);
+        //GUARD CLAUSE
+        if (!$result) {
+            die ('Error after deleting team member id');
+        } else {
+            echo "<script type='text/javascript'>alert('Deleted successfully');</script>";
+        }
     }
 
     $query  = "SELECT member_id,name FROM members";
@@ -221,20 +209,6 @@
             }
             ?>
 
-        <form action='teams.php' method='post'>
-            <input type='hidden' name='delete' value='yes'>
-            <input type='hidden' name='team_name' value='<?= $teams['team_name']?>'>
-            <div class="input-buttons delete-all">
-                <div class="input-container">
-                    <i class="glyphicon glyphicon-trash" style="float: left;"></i>
-                    <input type='submit' value='Delete team' style="margin: -5px 0px 0px 0px; border: none; background: transparent; float: left;">
-                </div>
-                <div class="input-container">
-                    
-                </div>
-            </div>
-        </form>
-
         </div>
     
     <?php endforeach;
@@ -339,8 +313,7 @@
 
         .input-buttons {
             display: flex;
-            align-items: center;
-            width: 100%;
+            align-items: center;z
             padding: 10px 5px;
             background-color: gray;
         }

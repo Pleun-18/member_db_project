@@ -45,13 +45,20 @@
         isset($_POST['member_id'])
     ) {
         //GETS POST VALUES
-        $email_adress   = $pdo->quote($_POST['email_adress']);
-        $member_id   = $pdo->quote($_POST['member_id']);
-        $query = "INSERT INTO email_adresses (email_adress, member_id) VALUES " . "($email_adress, $member_id)";
+        $email_adress   = $_POST['email_adress'];
+        $member_id   = $_POST['member_id'];
 
-        //EXECUTE QUERY (POST AND INSERT IN DATABASE)
-        $pdo->query($query);
+        //PREPARED STATEMENT
+        $stmt = $pdo->prepare("INSERT INTO email_adresses(email_adress, member_id) VALUES (:email_adress, :member_id)");
+        $stmt->bindParam(':email_adress', $email_adress, PDO::PARAM_STR);
+        $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
+        $stmt->execute();
 
+        if ($stmt) {
+            echo "<script type='text/javascript'>alert('Upload succesfull');</script>";
+        }else {
+            echo "<script type='text/javascript'>alert('Something went wrong');</script>";
+        }
     }
 
     //CHECKS FOR POST VALUES
@@ -60,20 +67,19 @@
         isset($_POST['member_id'])
     ) {
         //GETS POST VALUES
-        $phone_number   = $pdo->quote($_POST['phone_number']);
-        $member_id   = $pdo->quote($_POST['member_id']);
+        $phone_number   = $_POST['phone_number'];
+        $member_id   = $_POST['member_id'];
 
         //PREPARED STATEMENT
         $stmt = $pdo->prepare("INSERT INTO phone_numbers(phone_number, member_id) VALUES (:phone_number, :member_id)");
         $stmt->bindParam(':phone_number', $phone_number, PDO::PARAM_STR);
         $stmt->bindParam(':member_id', $member_id, PDO::PARAM_STR);
         $stmt->execute();
-    }
-
-    if (isset($_POST['delete']) && isset($_POST['member_id'])) {
-        $member_id  = $pdo->quote($_POST['member_id']);
-        $query  = "DELETE FROM members WHERE member_id=$member_id";
-        $pdo->query($query);
+        if ($stmt) {
+            echo "<script type='text/javascript'>alert('Upload succesfull');</script>";
+        }else {
+            echo "<script type='text/javascript'>alert('Something went wrong');</script>";
+        }
     }
 
     $query  = "SELECT * FROM postals";
@@ -205,10 +211,6 @@
             --blue: #0f4c5c;
             --font: "Montserrat";
             --title: "Roboto";
-        }
-
-        body {
-            font-family: 'Roboto';
         }
 
         .welcome-message {

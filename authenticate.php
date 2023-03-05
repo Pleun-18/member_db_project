@@ -103,11 +103,6 @@
     ?>
 
     <style>
-
-      body {
-        font-family: 'Roboto';
-      }
-
       form {
         padding: 20px;
         text-align: center;
